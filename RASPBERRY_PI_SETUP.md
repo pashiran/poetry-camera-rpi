@@ -2,6 +2,8 @@
 
 이 문서는 Poetry Camera (시 카메라) 프로젝트를 위한 Raspberry Pi Zero 2 W의 초기 설정 및 구성 과정을 안내합니다.
 
+이 가이드는 **헤드리스(headless) 설정**을 기준으로 작성되었습니다. 별도의 모니터, 키보드, 마우스 연결 없이 SSH를 통해 Raspberry Pi를 원격으로 설정하고 제어합니다.
+
 ## 목차
 1. [하드웨어 준비](#1-하드웨어-준비)
 2. [Raspberry Pi 초기 설정](#2-raspberry-pi-초기-설정)
