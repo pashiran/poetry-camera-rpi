@@ -78,22 +78,61 @@
 2. 쓰기 완료 후 MicroSD 카드를 안전하게 제거합니다.
 3. MicroSD 카드를 Raspberry Pi Zero 2 W에 삽입합니다.
 4. 전원 어댑터를 연결하여 Pi를 부팅합니다.
+5. **Pi가 부팅되고 OS 이미지가 설치될 때까지 1-2분간 대기합니다.** (녹색 LED가 깜빡이면 정상 작동 중)
 
-### 2.5 SSH로 접속
-Pi가 부팅되면 (약 1-2분 소요) SSH로 접속합니다:
+### 2.5 Windows에서 터미널 실행하기
+SSH로 Raspberry Pi에 접속하려면 먼저 Windows 터미널을 실행해야 합니다.
+
+<img src="./pics/K-20251027-222124543.jpg" width="600">
+
+1. `Win` 키를 누르거나 시작 메뉴 클릭
+2. "PowerShell" 또는 "터미널" 입력
+3. **Windows PowerShell** 또는 **Terminal** 선택
+
+
+### 2.6 SSH로 Raspberry Pi 접속
+터미널이 실행되면 다음 명령어로 Raspberry Pi에 접속합니다:
 
 ```powershell
-# Windows PowerShell에서
+# hostname으로 접속 (권장)
 ssh pi@poetry-camera.local
-# 또는 라우터에서 Pi의 IP 주소를 확인하여
-ssh pi@192.168.x.x
 ```
 
-> **참고**: 위 명령어의 `pi`는 2.3 단계에서 Raspberry Pi Imager의 고급 설정에서 설정했던 사용자 이름입니다. 다른 이름으로 설정했다면 해당 이름으로 변경하세요.
+> **명령어 설명**: `ssh [username]@[hostname].local` 형식입니다.
+> - `pi`: 2.3 단계에서 설정한 **사용자 이름 (username)**
+> - `poetry-camera`: 2.3 단계에서 설정한 **호스트 이름 (hostname)**
+> - 다른 이름으로 설정했다면 해당 이름으로 변경하세요.
 
-비밀번호를 입력하면 Pi에 접속됩니다.
+만약 `.local` 주소로 접속이 안 되면, 라우터 관리 페이지에서 Pi의 IP 주소를 확인한 후:
+```powershell
+# IP 주소로 접속 (예시)
+ssh pi@192.168.0.100
+```
 
-### 2.6 시스템 업데이트
+> **참고**: 
+> - 위 명령어의 `pi`는 2.3 단계에서 Raspberry Pi Imager의 고급 설정에서 설정했던 사용자 이름입니다. 
+> - `poetry-camera`는 2.3 단계에서 설정한 hostname입니다.
+> - 다른 이름으로 설정했다면 해당 이름으로 변경하세요.
+
+**첫 접속 시 나타나는 메시지:**
+```
+The authenticity of host 'poetry-camera.local (192.168.x.x)' can't be established.
+...
+Are you sure you want to continue connecting (yes/no/[fingerprint])?
+```
+→ `yes` 입력 후 Enter
+
+**비밀번호 입력:**
+- 2.3 단계에서 설정한 비밀번호를 입력합니다.
+- 입력 중에는 화면에 아무것도 표시되지 않지만 정상입니다.
+- 입력 완료 후 Enter
+
+접속에 성공하면 다음과 같은 화면이 나타납니다:
+```
+pi@poetry-camera:~ $
+```
+
+### 2.7 시스템 업데이트
 SSH 접속 후 다음 명령을 실행합니다:
 
 ```bash

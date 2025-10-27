@@ -1,7 +1,7 @@
 # Poetry Camera (시 카메라)
 보는 것을 시로 출력하는 카메라입니다.
 
-우리는 취미 전자공학의 세계에 입문하면서 이 프로젝트를 시작했습니다. 다음 지침은 우리처럼 완전한 초보자를 위한 것입니다. 부품을 쉽게 조달하고 조립할 수 있도록 디자인을 단순화했습니다. 그 결과 사진에 나온 버전보다 덜 컴팩트합니다. 전자공학과 코딩에 익숙하다면 더 많이 실험하고 리믹스하는 것을 권장합니다.
+이 가이드는 [원본 프로젝트](https://github.com/bokito-studio/poetry-camera-rpi)를 참조하여 한국 환경에 맞게 설치 과정을 변형했습니다. 부품 구매는 알리익스프레스를 기준으로 작성되었으나, 국내 쇼핑몰(네이버 스마트스토어, 쿠팡 등)에서도 대부분 구매 가능합니다.
 
 ⚠️ 이 지침은 아직 작성 중입니다. ⚠️  시도해보시고 혼란스럽거나 작동하지 않는 부분이 있으면 알려주세요.
 
@@ -12,42 +12,37 @@
 
 Raspberry Pi는 단순화된 컴퓨터입니다. 가볍고 저렴하지만 처리 성능이 제한적이며, 일반 소비자 전자제품보다 더 취약합니다. 전원 공급에 매우 민감해서 전압이 너무 높으면 부품이 손상되고, 너무 낮으면 소프트웨어가 실행되지 않습니다. 또한 전원을 빼기 전에 소프트웨어를 수동으로 종료해야 파일 시스템/소프트웨어 손상을 방지할 수 있습니다.
 
-우리는 처리 성능과 크기의 균형 때문에 Pi Zero 2를 선택했습니다(Pi Zero는 너무 느리고, 시중의 다른 대부분의 Pi는 더 큽니다). 이 튜토리얼의 배선도는 모든 Raspberry Pi에 적용되지만, 특히 구형 기기에서는 소프트웨어나 카메라 호환성에 차이가 있을 수 있습니다. [Pi 3B+](https://www.raspberrypi.com/products/raspberry-pi-3-model-b-plus/)로 테스트했을 때는 잘 작동했지만, [Pi 4](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/)는 요구 전력이 커서 휴대용으로 쓰기에는 비현실적일 수 있습니다.
+원본 프로젝트에서는 처리 성능과 크기의 균형을 고려하여 [Raspberry Pi Zero 2 W](https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/) 또는 [Pi 3B+](https://www.raspberrypi.com/products/raspberry-pi-3-model-b-plus/)를 권장합니다. Pi Zero는 처리 속도가 너무 느리고, [Pi 4](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/)는 요구 전력이 커서 휴대용으로 쓰기에는 비현실적일 수 있습니다. 이 가이드에서는 Pi Zero 2 W를 기준으로 설명합니다.
 
-Raspberry Pi Zero 2는 종종 헤더(2x20 검은 금속 커넥터) 없이 판매됩니다. 헤더가 있으면 점퍼 와이어로 프린터와 버튼을 쉽게 연결할 수 있습니다. 헤더가 없는 제품을 샀다면 [2x20 헤더](https://www.adafruit.com/product/2822)를 별도로 구매해 직접 납땜해야 합니다. 납땜을 원하지 않는다면 [해머온 헤더](https://www.adafruit.com/product/3662)와 [이 설치 지그](https://www.amazon.com/vilros-raspberry-headers-easy-installation-soldering/dp/b0cgryyy63)를 사용할 수 있습니다.
+Raspberry Pi Zero 2는 종종 헤더(2x20 검은 금속 커넥터) 없이 판매됩니다. 헤더가 있으면 점퍼 와이어로 프린터와 버튼을 쉽게 연결할 수 있습니다. 
 
 <img src="./pics/43c619a8.png" width="300">
-<img src="./pics/ebbbc23e.png" width="300">
 
-Raspberry Pi는 최근까지 공급 부족을 겪었고, 아직 회복 중입니다. 단품 재고 알림은 [rpilocator.com](https://rpilocator.com/)에서 확인하세요(액세서리 키트는 목록에 포함되지 않음).
 
 ### 2. Accessories to connect the Raspberry Pi to stuff.
   <img src="./pics/d482c0de.png" width="300">
-  
-  - [다음 구성 요소가 모두 포함된 Vilros 키트](https://vilros.com/products/vilros-raspberry-pi-zero-2-w-basic-starter-kit)
-    - [5V MicroUSB 전원 어댑터](https://www.amazon.com/CanaKit-Raspberry-Supply-Adapter-Listed/dp/B00MARDJZ4) 
-    - [케이스](https://www.adafruit.com/product/2258)
-    - [OS 설치용 32GB MicroSD 카드](https://www.canakit.com/raspberry-pi-sd-card-noobs.html)
-    - 과열 방지용 방열판(매우 중요!)
-    - 로지텍 키보드 무선 동글용 MicroUSB→USB 어댑터
-    - 모니터 연결용 MiniHDMI→HDMI 어댑터
-  - **키보드 & 마우스**: [로지텍 무선 콤보 키보드+트랙패드](https://www.amazon.com/Logitech-Wireless-Keyboard-Touchpad-PC-connected-dp-B014EUQOGK/dp/B014EUQOGK)를 추천합니다. Pi의 포트 하나만 차지합니다.
-  - **외부 모니터**: Pi 소프트웨어를 확인하고 프로그래밍하기 위한 용도입니다. 필수는 아니지만 SSH로 접속하는 것보다 초보자에게 훨씬 친절합니다. 아래 지침은 외부 모니터 사용을 전제로 합니다.
   
     
 ### 3. Camera: [Raspberry Pi Camera Module 3](https://www.raspberrypi.com/products/camera-module-3/)
   <img src="./pics/4fad7574.png" width="200">
 
-  대체로 간단하지만, 하드웨어 손상에 주의하세요. Raspberry Pi 카메라는 섬세하고 정전기에 의해 쉽게 망가질 수 있습니다. 우리는 이 프로젝트를 만드는 과정에서 카메라를 3개나 고장냈습니다. 사용하지 않을 땐 반드시 정전기 차폐 봉투에 보관하세요.
+  대체로 간단하지만, 하드웨어 손상에 주의하세요. Raspberry Pi 카메라는 섬세하고 정전기에 의해 쉽게 망가질 수 있습니다. 
 
-  Pi Zero 2에 카메라를 연결하는 경우, Zero 2의 카메라 커넥터(칼라)도 매우 약하다는 점에 유의하세요. 제작 중 해당 칼라를 하나 부러뜨려 Pi를 새로 사기도 했습니다 🥲
-
-  구형 Raspberry Pi 카메라 모델로는 본 지침을 테스트하지 않았습니다.
+  라즈베리 파이 카메라는 몇 가지 종류가 있으며, 이 가이드에서는 정품 Raspberry Pi Camera Module 3를 기준으로 작성되었습니다. 호환 카메라 모듈도 사용 가능하지만, 드라이버나 설정이 다를 수 있습니다.
 
   - **카메라 액세서리:**
-    - [삼각대 포함 카메라 케이스](https://www.amazon.com/Arducam-Raspberry-Bundle-Autofocus-Lightweight/dp/B09TKYXZFG) — 섬세한 카메라 하드웨어를 개발 중 보호하는 데 도움이 됩니다.
-    - [Pi Zero/Zero 2 전용 길이의 카메라 케이블](https://www.adafruit.com/product/3157) — 더 큰 Pi를 사용한다면 카메라에 기본 포함된 케이블만으로 충분합니다. Zero 2 케이블이 키트에 포함되어 있었다면 보통 2인치 정도의 짧은 케이블일 가능성이 큽니다. 카메라 배치를 유연하게 하려면 충분히 긴 케이블을 준비하세요.
-    - 선택 사항: Pi Zero 2의 섬세한 카메라 칼라를 열고 닫을 때 쓸 핀셋
+    - **카메라 케이블**: 라즈베리 파이 모델에 따라 필요한 케이블이 다릅니다.
+      
+      <img src="./pics/K-20251027-221443198.jpg" width="400">
+      
+      위 이미지는 Raspberry Pi 3B+ 등 일반 Pi용 케이블로, 양쪽 커넥터의 폭이 동일합니다.
+      
+      <img src="./pics/K-20251027-221516461.jpg" width="400">
+      
+      위 이미지는 Raspberry Pi Zero/Zero 2 W 전용 케이블로, 양쪽 커넥터의 폭이 다릅니다 (한쪽은 좁고 한쪽은 넓음). 
+      
+      ⚠️ **주의**: 케이블 구매 시 반드시 사용하는 라즈베리 파이 모델에 맞는 케이블을 선택하세요!
+
 
 
 ### 4. Receipt printer: [Mini Thermal Printer w/ TTL Serial connection](https://www.adafruit.com/product/2752)
