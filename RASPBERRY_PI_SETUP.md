@@ -37,12 +37,12 @@
 ### 2.1 Raspberry Pi Imager 다운로드
 1. PC/Mac에서 [Raspberry Pi Imager](https://www.raspberrypi.com/software/)를 다운로드하고 설치합니다.
 
-<img src="./assets/K-20251027-214529238.jpg" width="600">
+<img src="./pics/K-20251027-214529238.jpg" width="600">
 
 2. MicroSD 카드를 카드 리더기에 삽입하고 PC/Mac에 연결합니다.
 
 ### 2.2 OS 이미지 작성
-<img src="./assets/K-20251027-215012252.jpg" width="600">
+<img src="./pics/K-20251027-215012252.jpg" width="600">
 
 1. **Raspberry Pi Imager**를 실행합니다.
 2. **"CHOOSE DEVICE"** 클릭 → **Raspberry Pi Zero 2 W** 선택
@@ -50,8 +50,8 @@
 4. **"CHOOSE STORAGE"** 클릭 → 연결된 MicroSD 카드 선택
 
 ### 2.3 고급 설정 (매우 중요!)
-
-
+<img src="./pics/K-20251027-215012252.jpg" width="600">
+<img src="./pics/K-20251027-215206558.jpg" width="600">
 
 1. **"NEXT"** 클릭 후 **"EDIT SETTINGS"** 선택
 2. **General 탭**에서 다음을 설정:
@@ -67,7 +67,6 @@
      - Time zone: `Asia/Seoul`
      - Keyboard layout: `us` (또는 `kr`)
 
-<img src="./assets/K-20251027-215206558.jpg" width="600">
 3. **Services 탭**에서:
    - **Enable SSH** 체크
    - **Use password authentication** 선택

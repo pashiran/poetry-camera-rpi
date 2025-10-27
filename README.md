@@ -8,7 +8,7 @@
 ## 필요한 하드웨어
 ### 1. 컴퓨터: 헤더가 포함된 [Raspberry Pi Zero 2 W](https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/)
 
-<img src="./assets/a7da1fae.png" width="300" height="300">
+<img src="./pics/a7da1fae.png" width="300" height="300">
 
 Raspberry Pi는 단순화된 컴퓨터입니다. 가볍고 저렴하지만 처리 성능이 제한적이며, 일반 소비자 전자제품보다 더 취약합니다. 전원 공급에 매우 민감해서 전압이 너무 높으면 부품이 손상되고, 너무 낮으면 소프트웨어가 실행되지 않습니다. 또한 전원을 빼기 전에 소프트웨어를 수동으로 종료해야 파일 시스템/소프트웨어 손상을 방지할 수 있습니다.
 
@@ -16,13 +16,13 @@ Raspberry Pi는 단순화된 컴퓨터입니다. 가볍고 저렴하지만 처�
 
 Raspberry Pi Zero 2는 종종 헤더(2x20 검은 금속 커넥터) 없이 판매됩니다. 헤더가 있으면 점퍼 와이어로 프린터와 버튼을 쉽게 연결할 수 있습니다. 헤더가 없는 제품을 샀다면 [2x20 헤더](https://www.adafruit.com/product/2822)를 별도로 구매해 직접 납땜해야 합니다. 납땜을 원하지 않는다면 [해머온 헤더](https://www.adafruit.com/product/3662)와 [이 설치 지그](https://www.amazon.com/vilros-raspberry-headers-easy-installation-soldering/dp/b0cgryyy63)를 사용할 수 있습니다.
 
-<img src="./assets/43c619a8.png" width="300">
-<img src="./assets/ebbbc23e.png" width="300">
+<img src="./pics/43c619a8.png" width="300">
+<img src="./pics/ebbbc23e.png" width="300">
 
 Raspberry Pi는 최근까지 공급 부족을 겪었고, 아직 회복 중입니다. 단품 재고 알림은 [rpilocator.com](https://rpilocator.com/)에서 확인하세요(액세서리 키트는 목록에 포함되지 않음).
 
 ### 2. Accessories to connect the Raspberry Pi to stuff.
-  <img src="./assets/d482c0de.png" width="300">
+  <img src="./pics/d482c0de.png" width="300">
   
   - [다음 구성 요소가 모두 포함된 Vilros 키트](https://vilros.com/products/vilros-raspberry-pi-zero-2-w-basic-starter-kit)
     - [5V MicroUSB 전원 어댑터](https://www.amazon.com/CanaKit-Raspberry-Supply-Adapter-Listed/dp/B00MARDJZ4) 
@@ -36,7 +36,7 @@ Raspberry Pi는 최근까지 공급 부족을 겪었고, 아직 회복 중입니
   
     
 ### 3. Camera: [Raspberry Pi Camera Module 3](https://www.raspberrypi.com/products/camera-module-3/)
-  <img src="./assets/4fad7574.png" width="200">
+  <img src="./pics/4fad7574.png" width="200">
 
   대체로 간단하지만, 하드웨어 손상에 주의하세요. Raspberry Pi 카메라는 섬세하고 정전기에 의해 쉽게 망가질 수 있습니다. 우리는 이 프로젝트를 만드는 과정에서 카메라를 3개나 고장냈습니다. 사용하지 않을 땐 반드시 정전기 차폐 봉투에 보관하세요.
 
@@ -52,7 +52,7 @@ Raspberry Pi는 최근까지 공급 부족을 겪었고, 아직 회복 중입니
 
 ### 4. Receipt printer: [Mini Thermal Printer w/ TTL Serial connection](https://www.adafruit.com/product/2752)
 
-<img src="./assets/209bbe14.png" width="300">
+<img src="./pics/209bbe14.png" width="300">
 
 이 프로젝트에는 Adafruit의 열전사 프린터 라인을 사용했지만, 현재는 단종되었습니다. 아마존/알리익스프레스에서 유사 제품을 찾을 수 있으며, 우리가 구매한 제품들은 [동일한 프린터 드라이버](https://github.com/adafruit/zj-58)로 동작했습니다(Adafruit 측 유지보수는 중단되었지만 여전히 동작하는 것으로 보임).
 
@@ -73,9 +73,9 @@ Raspberry Pi는 최근까지 공급 부족을 겪었고, 아직 회복 중입니
 
 
 ### 5. Batteries:
-<img src="./assets/b3507b14.png" width="300">
-<img src="./assets/5196a5ee.png" width="300">
-<img src="./assets/f1340f50.png" width="300">
+<img src="./pics/b3507b14.png" width="300">
+<img src="./pics/5196a5ee.png" width="300">
+<img src="./pics/f1340f50.png" width="300">
 
 카메라를 휴대용으로 쓰고 싶다면 배터리가 필요합니다! Pi는 5V 1.2A의 안정적인 전원이 필요하고, 프린터는 5~9V를 요구하며 인쇄 중에는 약 2A를 소모합니다.
 
@@ -104,7 +104,7 @@ Raspberry Pi는 최근까지 공급 부족을 겪었고, 아직 회복 중입니
 
 
 ### 6. Shutter button & LED
-<img src="./assets/90120571.png" width="300">
+<img src="./pics/90120571.png" width="300">
 
 셔터 버튼은 임시(momentary) 푸시버튼이면 아무거나 사용 가능합니다. LED는 준비 완료, 로딩 등 상태 표시용으로 사용합니다.
 
@@ -250,7 +250,7 @@ sudo reboot
 ## Part 6. 전원 회로 만들기
 [TODO] 정리 및 단계별 설명 추가 :)
 
-<img width="1217" alt="image" src="./assets/dca36686.png">
+<img width="1217" alt="image" src="./pics/dca36686.png">
 
 ## Part 7: 이동 중 Wi‑Fi 네트워크 변경
 이 카메라는 동작을 위해 Wi‑Fi가 필요합니다. `wpa_supplicant.conf`를 편집해 모바일 핫스팟을 하드코딩할 수도 있습니다. 이동 중 새 Wi‑Fi에 손쉽게 연결하려면 플러그 앤드 플레이 코드가 포함된 [이 간단한 튜토리얼](https://www.raspberrypi.com/tutorials/host-a-hotel-wifi-hotspot/)을 따라 하세요. (튜토리얼의 Flask 앱과 우리의 메인 카메라 코드를 각각 cron 작업으로 함께 자동 실행할 수도 있습니다.)
