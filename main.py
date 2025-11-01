@@ -4,7 +4,7 @@
 # Capture a JPEG while still running in the preview mode. When you
 # capture to a file, the return value is the metadata for that image.
 
-import time, requests, signal, os, replicate
+import time, requests, signal, os, base64
 
 from picamera2 import Picamera2, Preview
 from gpiozero import LED, Button
@@ -17,7 +17,6 @@ from openai import OpenAI
 #load API keys from .env
 load_dotenv()
 openai_client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
-REPLICATE_API_TOKEN = os.environ['REPLICATE_API_TOKEN']
 
 #instantiate printer
 baud_rate = 9600 # REPLACE WITH YOUR OWN BAUD RATE
@@ -72,15 +71,37 @@ def take_photo_and_print_poem():
   print_header()
 
   #########################
-  # Send saved image to API
+  # Send saved image to OpenAI Vision API
   #########################
 
-  image_caption = replicate.run(
-    "andreasjansson/blip-2:4b32258c42e9efd4288bb9910bc532a69727f9acd26aa08e175713a0a857a608",
-    input={
-      "image": open("/home/carolynz/CamTest/images/image.jpg", "rb"),
-      "caption": True,
-    })
+  # Encode image to base64
+  with open("/home/carolynz/CamTest/images/image.jpg", "rb") as image_file:
+    base64_image = base64.b64encode(image_file.read()).decode('utf-8')
+
+  # Use GPT-4 Vision to analyze the image
+  vision_response = openai_client.chat.completions.create(
+    model="gpt-4o",  # or "gpt-4-turbo" or "gpt-4o-mini" for lower cost
+    messages=[
+      {
+        "role": "user",
+        "content": [
+          {
+            "type": "text",
+            "text": "Describe this image in detail. Focus on the mood, atmosphere, objects, colors, and any interesting details that could inspire a poem."
+          },
+          {
+            "type": "image_url",
+            "image_url": {
+              "url": f"data:image/jpeg;base64,{base64_image}"
+            }
+          }
+        ]
+      }
+    ],
+    max_tokens=300
+  )
+
+  image_caption = vision_response.choices[0].message.content
 
   print('caption: ', image_caption)
   # generate our prompt for GPT

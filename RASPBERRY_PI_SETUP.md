@@ -188,8 +188,6 @@ sudo reboot  # 자동 재부팅을 선택하지 않은 경우에만 실행
 sudo apt-get install git cups build-essential libcups2-dev libcupsimage2-dev python3-serial python3-pil python3-unidecode rpicam-apps -y
 ```
 
-> **참고**: 구버전 Raspberry Pi OS에서는 `rpicam-apps` 대신 `libcamera-apps`를 설치하세요.
-
 ### 3.3 카메라 테스트
 ```bash
 # 카메라가 인식되는지 확인 (최신 명령어)
@@ -219,6 +217,8 @@ cd zj-58
 make
 sudo ./install
 ```
+
+> **참고**: `make` 명령 실행 시 여러 개의 경고 메시지(`deprecated` 관련)가 나타날 수 있습니다. 이는 오래된 CUPS API를 사용하기 때문이며, 컴파일은 정상적으로 완료되고 프린터 기능에는 전혀 영향을 주지 않습니다. 경고 메시지가 나타나더라도 문제없이 다음 단계(`sudo ./install`)를 진행하면 됩니다.
 
 ### 4.2 프린터 하드웨어 연결
 열전사 프린터를 Raspberry Pi에 연결합니다:
@@ -255,15 +255,23 @@ cd poetry-camera-rpi
 ```
 
 ### 5.2 Python 패키지 설치
+
+Poetry Camera에 필요한 핵심 패키지를 설치합니다:
+
 ```bash
-pip3 install -r requirements.txt
+pip3 install picamera2 openai python-dotenv RPi.GPIO --break-system-packages
 ```
+
+> **참고**: 
+> - 최신 Raspberry Pi OS에서는 `externally-managed-environment` 오류를 방지하기 위해 `--break-system-packages` 옵션이 필요합니다.
+> - 저장소의 `requirements.txt`에는 전체 시스템 패키지가 포함되어 있어 일부 설치가 실패할 수 있으므로, 위 명령어로 필요한 패키지만 설치합니다.
+> - 프린터 제어를 위한 `Adafruit-Thermal` 라이브러리는 저장소의 `Adafruit_Thermal.py` 파일로 이미 포함되어 있습니다.
 
 주요 패키지:
 - `picamera2`: 카메라 제어
-- `openai`: OpenAI API 사용
+- `openai`: OpenAI API 사용 (이미지 분석 및 시 생성)
 - `python-dotenv`: 환경 변수 관리
-- `Adafruit-Thermal`: 프린터 제어
+- `RPi.GPIO`: GPIO 핀 제어 (버튼/LED)
 
 ### 5.3 프린터 보드레이트 설정
 프린터의 보드레이트가 `19200`과 다르다면, `main.py` 파일을 수정합니다:
@@ -280,6 +288,8 @@ printer = Adafruit_Thermal('/dev/serial0', 19200, timeout=5)  # 19200을 실제 
 ### 6.1 OpenAI API 키 발급
 1. [OpenAI 웹사이트](https://openai.com/)에서 계정을 생성합니다.
 2. API 키를 발급받습니다.
+
+> **중요**: 이 프로젝트는 OpenAI의 GPT-4o (또는 GPT-4-turbo) Vision API를 사용하여 이미지를 분석하고 시를 생성합니다. 충분한 크레딧이 있는지 확인하세요.
 
 ### 6.2 .env 파일 생성
 ```bash
