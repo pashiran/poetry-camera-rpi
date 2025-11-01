@@ -19,7 +19,7 @@ load_dotenv()
 openai_client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
 
 #instantiate printer
-baud_rate = 9600 # REPLACE WITH YOUR OWN BAUD RATE
+baud_rate = 19200 # Set to 19200 for most thermal printers
 printer = Adafruit_Thermal('/dev/serial0', baud_rate, timeout=5)
 
 #instantiate camera
