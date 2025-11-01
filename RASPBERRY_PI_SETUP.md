@@ -250,9 +250,11 @@ sudo ./install
 ### 5.1 Poetry Camera 저장소 클론
 ```bash
 cd ~
-git clone https://github.com/carolynz/poetry-camera-rpi.git
+git clone https://github.com/pashiran/poetry-camera-rpi.git
 cd poetry-camera-rpi
 ```
+
+> **참고**: 이 저장소는 한국어 문서와 최신 OpenAI Vision API를 사용하도록 개선된 버전입니다.
 
 ### 5.2 Python 패키지 설치
 
@@ -273,12 +275,16 @@ pip3 install picamera2 openai python-dotenv RPi.GPIO --break-system-packages
 - `python-dotenv`: 환경 변수 관리
 - `RPi.GPIO`: GPIO 핀 제어 (버튼/LED)
 
-### 5.3 프린터 보드레이트 설정
-프린터의 보드레이트가 `19200`과 다르다면, `main.py` 파일을 수정합니다:
+### 5.3 프린터 보드레이트 확인
+이 저장소의 `main.py`는 보드레이트가 `19200`으로 설정되어 있습니다. 대부분의 열전사 프린터에서 작동하지만, 만약 프린터가 다른 보드레이트를 사용한다면 `main.py` 파일을 수정하세요:
 
+```bash
+nano ~/poetry-camera-rpi/main.py
+```
+
+보드레이트 값을 변경:
 ```python
-# main.py에서 해당 라인을 찾아 보드레이트를 변경
-printer = Adafruit_Thermal('/dev/serial0', 19200, timeout=5)  # 19200을 실제 값으로 변경
+baud_rate = 19200  # 프린터에 맞게 수정 (일반적으로 9600 또는 19200)
 ```
 
 ---
@@ -327,8 +333,10 @@ crontab -e
 
 편집기가 열리면 다음 줄을 맨 아래에 추가합니다:
 ```
-@reboot python3 /home/pi/poetry-camera-rpi/main.py >> /home/pi/poetry-camera-rpi/errors.txt 2>&1
+@reboot python3 /home/pashiran/poetry-camera-rpi/main.py >> /home/pashiran/poetry-camera-rpi/errors.txt 2>&1
 ```
+
+> **중요**: 위 경로에서 `pashiran`을 2.3 단계에서 설정한 **실제 사용자 이름**으로 변경하세요. 예를 들어 사용자 이름이 `pi`라면 `/home/pi/poetry-camera-rpi/...`로 수정합니다.
 
 **설명**:
 - `@reboot`: 부팅 시 실행
