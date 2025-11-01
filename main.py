@@ -56,8 +56,12 @@ def take_photo_and_print_poem():
   # blink LED in a background thread
   led.blink()
 
+  # Ensure the directory exists
+  image_path = '/home/pashiran/CamTest/images/image.jpg'
+  os.makedirs(os.path.dirname(image_path), exist_ok=True)
+
   # Take photo & save it
-  metadata = picam2.capture_file('/home/carolynz/CamTest/images/image.jpg')
+  metadata = picam2.capture_file(image_path)
 
   # FOR DEBUGGING: print metadata
   #print(metadata)
@@ -75,7 +79,7 @@ def take_photo_and_print_poem():
   #########################
 
   # Encode image to base64
-  with open("/home/carolynz/CamTest/images/image.jpg", "rb") as image_file:
+  with open(image_path, "rb") as image_file:
     base64_image = base64.b64encode(image_file.read()).decode('utf-8')
 
   # Use GPT-4 Vision to analyze the image
