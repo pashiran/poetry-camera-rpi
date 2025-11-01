@@ -142,7 +142,10 @@ sudo apt-get update
 sudo apt-get upgrade -y
 ```
 
-### 2.7 Raspberry Pi 구성 설정
+> **참고**: 최초 설치 시에는 업데이트할 패키지가 많아 시간이 다소 걸릴 수 있습니다 (5-15분). 
+> 인터넷 속도에 따라 더 오래 걸릴 수도 있으니 여유를 가지고 기다려주세요.
+
+### 2.8 Raspberry Pi 구성 설정
 Raspberry Pi 하드웨어 설정을 변경합니다:
 
 ```bash
@@ -150,13 +153,15 @@ sudo raspi-config
 ```
 
 다음 설정을 변경하세요:
-- **Interface Options → Camera → Glamor: ON** (최신 Raspbian OS에서 카메라 사용)
-- **Interface Options → Serial Port: ON** (영수증 프린터 입력 사용)
-- **Interface Options → Serial Console: OFF** (시리얼 콘솔 비활성화)
+- **카메라 설정**: 최신 Raspberry Pi OS에서는 카메라 옵션이 기본적으로 없으며, libcamera가 자동으로 활성화되어 있습니다.
+- **Interface Options → Serial Port** 선택:
+  - "Would you like a login shell to be accessible over serial?" → **No** 선택
+  - "Would you like the serial port hardware to be enabled?" → **Yes** 선택
+  - Finish로 빠져나옵니다.
 
-설정 변경 후 재부팅:
+설정 변경 후 재부팅이 필요합니다. raspi-config 종료 시 자동으로 재부팅 여부를 물어보므로, **Yes**를 선택하면 별도로 재부팅 명령을 실행할 필요가 없습니다.
 ```bash
-sudo reboot
+sudo reboot  # 자동 재부팅을 선택하지 않은 경우에만 실행
 ```
 
 ---
@@ -176,7 +181,14 @@ sudo reboot
 
 ⚠️ **정전기 주의**: 카메라 모듈은 정전기에 매우 민감합니다. 사용하지 않을 때는 반드시 정전기 차폐 봉투에 보관하세요.
 
-### 3.2 카메라 테스트
+### 3.2 필요한 패키지 설치
+카메라와 프린터를 사용하기 위한 패키지들을 설치합니다:
+
+```bash
+sudo apt-get install git cups build-essential libcups2-dev libcupsimage2-dev python3-serial python3-pil python3-unidecode libcamera-apps -y
+```
+
+### 3.3 카메라 테스트
 ```bash
 # 카메라가 인식되는지 확인
 libcamera-hello
@@ -191,12 +203,7 @@ libcamera-jpeg -o test.jpg
 
 ## 4. 프린터 설정
 
-### 4.1 필요한 패키지 설치
-```bash
-sudo apt-get install git cups build-essential libcups2-dev libcupsimage2-dev python3-serial python3-pil python3-unidecode -y
-```
-
-### 4.2 Adafruit Thermal Printer 드라이버 설치
+### 4.1 Adafruit Thermal Printer 드라이버 설치
 ```bash
 cd ~
 git clone https://github.com/adafruit/zj-58
@@ -205,8 +212,10 @@ make
 sudo ./install
 ```
 
-### 4.3 프린터 하드웨어 연결
+### 4.2 프린터 하드웨어 연결
 열전사 프린터를 Raspberry Pi에 연결합니다:
+
+<img src="./pics/raspberry-pi-zero-2-w-pinout.jpg" width="600">
 
 | 프린터 핀 | Pi GPIO 핀 |
 |---------|-----------|
@@ -214,11 +223,15 @@ sudo ./install
 | RX      | TX (GPIO 14) |
 | TX      | RX (GPIO 15) |
 
+⚠️ **중요**: TX와 RX는 **교차 연결**해야 합니다!
+- 프린터의 **RX** → Pi의 **TX** (GPIO 14)
+- 프린터의 **TX** → Pi의 **RX** (GPIO 15)
+
 **전원 연결**:
 - 프린터의 DC 전원 커넥터에 5V 전원 어댑터를 연결합니다.
 - 프린터와 Pi는 **별도의 전원**을 사용해야 합니다.
 
-### 4.4 프린터 보드레이트 확인
+### 4.3 프린터 보드레이트 확인
 프린터의 보드레이트를 확인하세요 (일반적으로 `19200` 또는 `9600`).
 이 값은 나중에 코드에서 사용됩니다.
 
